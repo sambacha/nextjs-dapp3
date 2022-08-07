@@ -3,11 +3,29 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prod": "NODE_ENV='production' npx next build",
+    "inspect": "NODE_OPTIONS='--inspect' next dev",
+    "build:local": ". ./scripts/populate-git-env.sh && next build",
+    "build:profiler": ". ./scripts/populate-git-env.sh && next build --profile --debug",
+    "vercel:deploy": ". ./scripts/populate-git-env.sh && vercel --build-env GIT_COMMIT_TAGS=$GIT_COMMIT_TAGS --build-env GIT_COMMIT_REF=$GIT_COMMIT_REF --build-env GIT_COMMIT_SHA=$GIT_COMMIT_SHA --confirm --debug --force",
+    "script:populate-git-env:print": ". ./scripts/populate-git-env.sh && echo 'SHA: '${GIT_COMMIT_SHA} && echo 'REF (current branch/tag): '${GIT_COMMIT_REF} && echo 'TAGS: '${GIT_COMMIT_TAGS}",
+    "git:getReleasesAndTags": "git tag --points-at HEAD | tr '\\r\\n' ' '",
+    "git:getCommitSHA": "git rev-parse HEAD",
+    "git:getCommitSHA:short": "git rev-parse --short HEAD",
+    "git:getCommitRef": "git symbolic-ref HEAD",
+    "test": "jest --modulePathIgnorePatterns=e2e",
+    "test:ci": "jest -modulePathIgnorePatterns=e2e --ci --collectCoverage",
+    "test:watch": "jest -modulePathIgnorePatterns=e2e --watch"
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.6.2",
+    "@ethersproject/constants": "^5.6.1",
+    "@ethersproject/units": "^5.6.1",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
+    "@walletconnect/ethereum-provider": "1.8.0",
+    "@walletconnect/jsonrpc-provider": "1.0.5",
     "clsx": "^1.2.1",
     "ethers": "^5.6.9",
     "next": "latest",
@@ -36,5 +54,28 @@
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
     "v8-compile-cache-lib": "^3.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.3%",
+      "not dead",
+      "not op_mini all",
+      "not IE > 0",
+      "not samsung 4",
+      "not and_uc 12.12"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 2 Edge major versions ",
+      "last 2 iOS major versions ",
+      "not iOS 12.5"
+    ]
+  },
+  "nextBundleAnalysis": {
+    "budget": 3584000,
+    "budgetPercentIncreaseRed": 40,
+    "showDetails": true
   }
 }
