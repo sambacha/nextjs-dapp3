@@ -1,19 +1,11 @@
-// @ts-check 
-const { join } = require('path');
-const { createGlobPatternsForDependencies } = require('@nrwl/next/tailwind');
-// const defaultTheme = require('tailwindcss/defaultTheme')
-// const plugin = require('tailwindcss/plugin')
+const height = require('./height')
 
-
-const height = require('./tailwind/height')
-/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
   content: [
-//    './pages/**/*.{js,ts,jsx,tsx}',
-//    './components/**/*.{js,ts,jsx,tsx}',
-    join(__dirname, 'pages/**/*.{js,ts,jsx,tsx}'),
-    join(__dirname, 'components/**/*.{js,ts,jsx,tsx}'),
-    ...createGlobPatternsForDependencies(__dirname),
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+ //   '../../packages/${pkgName}/**/*.{ts,tsx}',
   ],
   darkMode: 'class',
   theme: {
@@ -61,4 +53,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
